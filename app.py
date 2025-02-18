@@ -13,6 +13,9 @@ PROCESSED_FOLDER = 'processed'
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 os.makedirs(PROCESSED_FOLDER, exist_ok=True)
 
+# These folders allow use to keep track of the file's path at all times.
+# This is necessary because we will be using the "load_workbook" function to access the excel files.
+# This function needs a path to find the file.
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['PROCESSED_FOLDER'] = PROCESSED_FOLDER
 
