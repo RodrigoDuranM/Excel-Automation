@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Excel File Sorter</title>
+  <!-- Link to your external CSS file -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='removeStyles.css') }}" />
+  <!-- SheetJS Library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+</head>
+<body>
+
+  <!-- Navbar Section -->
+  <nav class="navbar">
+    <div class="navbar__container">
+      <a href="#home" id="navbar__logo">Excel Data Automation Project</a>
+      <div class="navbar__toggle" id="mobile-menu">
+        <span class="bar"></span> <span class="bar"></span>
+        <span class="bar"></span>
+      </div>
+      <ul class="navbar__menu">
+        <li class="navbar__item">
+          <a href="{{ url_for('index') }}" class="navbar__links" id="home-page">Home</a>
+        </li>
+        <li class="navbar__item">
+          <a href="{{ url_for('filtering') }}" class="navbar__links" id="services-page">Filtering</a>
+        </li>
+        <li class="navbar__btn">
+          <a href="{{ url_for('chat') }}" class="button" id="AI">AI</a>
+        </li>
+        <li class="navbar__btn">
+          <a href="#sign-up" class="button" id="signup">GitHub</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Excel Sorter Section -->
+  <section class="excel-container">
+    <h2>Excel Data Highlighter</h2>
+    <form action="{{ url_for('highlightWord') }}" method="POST" enctype="multipart/form-data">
+      <div class="excel-group">
+        <label for="fileInput">Upload an Excel File:</label>
+        <input type="file" name="fileInput" id="fileInput" class="excel-input" accept=".xlsx, .xls" required />
+      </div>
+      <div class="excel-group">
+        <label for="headerInput">Enter the Header Name:</label>
+        <input type="text" name="headerInput" id="headerInput" class="excel-input" placeholder="e.g., Expenses" required />
+      </div>
+      <div class="excel-group">
+        <label for="valueInput">Enter Key Value:</label>
+        <input type="text" name="valueInput" id="valueInput" class="excel-value" placeholder="e.g., Gas" required />
+      </div>
+      <button type="submit" class="excel-button">Highlight and Download</button>
+    </form>
+  </section>
+
+
+</body>
+</html>

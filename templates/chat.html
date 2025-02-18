@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Excel Assistant Chat</title>
+  <!-- Bootstrap for basic styling -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <!-- Font Awesome for the plus icon -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+  <style>
+    body {
+      background-color: #f2f2f2;
+    }
+    .chat-container {
+      max-width: 600px;
+      margin: 20px auto;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      display: flex;
+      flex-direction: column;
+      height: 80vh;
+    }
+    .chat-window {
+      flex: 1;
+      padding: 20px;
+      overflow-y: auto;
+    }
+    .chat-input {
+      border-top: 1px solid #ddd;
+      padding: 10px;
+      display: flex;
+      align-items: center;
+    }
+    .input-bubble {
+      flex: 1;
+      padding: 10px 15px;
+      border-radius: 20px;
+      border: 1px solid #ccc;
+    }
+    .send-btn {
+      margin-left: 10px;
+    }
+    .file-btn {
+      margin-right: 10px;
+      cursor: pointer;
+      font-size: 20px;
+      color: #007bff;
+    }
+    .message {
+      max-width: 70%;
+      margin-bottom: 10px;
+      padding: 10px 15px;
+      border-radius: 20px;
+      position: relative;
+      word-wrap: break-word;
+    }
+    .user-message {
+      background-color: #007aff;
+      color: white;
+      margin-left: auto;
+      border-bottom-right-radius: 0;
+    }
+    .ai-message {
+      background-color: #e5e5ea;
+      color: black;
+      margin-right: auto;
+      border-bottom-left-radius: 0;
+    }
+  </style>
+</head>
+<body>
+  
+  <div class="chat-container">
+    <div id="chat-window" class="chat-window">
+      <!-- Chat messages will be appended here -->
+    </div>
+    <div class="chat-input">
+      <i class="fas fa-plus file-btn" id="file-btn"></i>
+      <input type="file" id="file-input" name="file" style="display: none;">
+      <input type="text" class="form-control input-bubble" id="message-input" name="message" placeholder="Type your message...">
+      <button class="btn btn-primary send-btn" id="send-btn">Send</button>
+    </div>
+  </div>
+
+  <!-- jQuery (for simplicity) -->
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script>
+    $(document).ready(function(){
+      // Toggle file input when the plus icon is clicked
+      $('#file-btn').on('click', function(){
+        $('#file-input').click();
+      });
+  
+      // Detect when a file is selected and notify the user
+      $('#file-input').on('change', function(){
+        var file = this.files[0];
+        if(file){
+          appendMessage('ai', "📁 File received: " + file.name);
+        }
+      });
+  
+      // Send message when the send button is clicked
+      $('#send-btn').on('click', function(){
+        sendMessage();
+      });
+  
+      // Allow sending on pressing Enter in the text field
+      $('#message-input').on('keypress', function(e){
+        if (e.which === 13) {
+          sendMessage();
+        }
+      });
+  
+      function sendMessage(){
+        var message = $('#message-input').val().trim();
+        var fileInput = $('#file-input')[0];
+        var formData = new FormData();
+  
+        if (!message && !fileInput.files[0]) return; // Don't send empty requests
+  
+        if(message){
+          formData.append('message', message);
+          appendMessage('user', message);
+        }
+  
+        if(fileInput.files[0]){
+          formData.append('file', fileInput.files[0]);
+        }
+  
+        $('#message-input').val('');
+        $('#file-input').val('');
+  
+        $.ajax({
+          url: '/chat',
+          type: 'POST',
+          data: formData,
+          processData: false,
+          contentType: false,
+          xhrFields: {
+            responseType: 'blob' // Expect a binary blob (file) in response
+          },
+          success: function(response, status, xhr){
+            // Determine content type to decide if response is JSON or a file
+            var ct = xhr.getResponseHeader('Content-Type');
+            if(ct && ct.indexOf('application/json') !== -1){
+              // Read the blob as text and then parse JSON
+              var reader = new FileReader();
+              reader.onload = function(){
+                var json = JSON.parse(reader.result);
+                if(json.response){
+                  appendMessage('ai', json.response);
+                } else {
+                  appendMessage('ai', "Sorry, I didn't get a response.");
+                }
+              };
+              reader.readAsText(response);
+            } else {
+              // Assume it's a file – extract filename from Content-Disposition if available
+              var filename = "updated_file.xlsx";
+              var disposition = xhr.getResponseHeader('Content-Disposition');
+              if (disposition && disposition.indexOf('filename=') !== -1) {
+                var filenameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
+                var matches = filenameRegex.exec(disposition);
+                if (matches != null && matches[1]) { 
+                  filename = matches[1].replace(/['"]/g, '');
+                }
+              }
+              // Create a temporary download link and trigger it
+              var blobUrl = window.URL.createObjectURL(response);
+              var a = document.createElement('a');
+              a.href = blobUrl;
+              a.download = filename;
+              document.body.appendChild(a);
+              a.click();
+              document.body.removeChild(a);
+              appendMessage('ai', "File downloaded: " + filename);
+              $('#chat-response').text('Is there anything else I can help you with?');
+            }
+          },
+          error: function(){
+            appendMessage('ai', "Error communicating with the server.");
+          }
+        });
+      }
+  
+      function appendMessage(sender, text){
+        var messageDiv = $('<div class="message"></div>');
+        if(sender === 'user'){
+          messageDiv.addClass('user-message');
+        } else {
+          messageDiv.addClass('ai-message');
+        }
+        messageDiv.text(text);
+        $('#chat-window').append(messageDiv);
+        // Auto-scroll to the bottom
+        $('#chat-window').scrollTop($('#chat-window')[0].scrollHeight);
+      }
+    });
+  </script>
+  
+</body>
+</html>

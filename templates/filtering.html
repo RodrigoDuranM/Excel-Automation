@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Data Filtering</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='filterStyles.css') }}" />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.14.0/css/all.css"
+      integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <!-- Navbar Section -->
+    <nav class="navbar">
+      <div class="navbar__container">
+        <a href="/" id="navbar__logo">Excel Data Automation Project - Filtration</a>
+        <div class="navbar__toggle" id="mobile-menu">
+          <span class="bar"></span> <span class="bar"></span>
+          <span class="bar"></span>
+        </div>
+        <ul class="navbar__menu">
+          <li class="navbar__item">
+            <a href="{{ url_for('index') }}" class="navbar__links">Home</a>
+          </li>
+          <li class="navbar__item">
+            <a href="#sorting" class="navbar__links">Filtering</a>
+          </li>
+          <li class="navbar__btn">
+            <a href="{{ url_for('chat') }}" class="button" id="AI">AI</a>
+          </li>
+          <li class="navbar__btn">
+            <a href="https://GitHub.com" class="button" id="signup">GitHub</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="hero" id="home">
+      <div class="hero__container">
+        <h1 class="hero__heading">Keep Your Data <span>Clean</span></h1>
+        <p class="hero__description">Effortless Data Filtration</p>
+      </div>
+    </div>
+
+    <!-- Data Sorting Section -->
+    <div class="services" id="sorting">
+      <h1>Choose Filtering Type</h1>
+      <div class="services__wrapper">
+        <div class="services__card">
+          <h2>Filter Information</h2>
+          <div class="services__btn"><button><a href="{{ url_for('filter') }}" id="filter">Filter Now</a></button></div>
+        </div>
+        <div class="services__card">
+          <h2>Remove Duplicates</h2>
+          <div class="services__btn"><button><a href="{{ url_for('remove') }}" id="remove">Filter Now</a></button></div>
+        </div>
+        <div class="services__card">
+          <h2>Highlight by Number</h2>
+          <div class="services__btn"><button><a href="{{ url_for('highlightNum') }}" id="highlight">Filter Now</a></button></div>
+        </div>
+        <div class="services__card">
+          <h2>Highlight by Word</h2>
+          <div class="services__btn"><button><a href="{{ url_for('highlightWord') }}" id="highlight">Filter Now</a></button></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer Section -->
+    <footer class="footer">
+      <div class="footer__container">
+        <p>�� 2025 Excel Data Automation Project. By Rodrigo Durán Morenilla.</p>
+      </div>
+    </footer>
+
+    <script src="app.js"></script>
+
+  </body>
+</html>

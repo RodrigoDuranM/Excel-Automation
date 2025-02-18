@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Excel File Sorter</title>
+  <!-- Link to your external CSS file -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='sortNumStyles.css') }}" />
+  <!-- SheetJS Library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+</head>
+<body>
+
+  <!-- Navbar Section -->
+  <nav class="navbar">
+    <div class="navbar__container">
+      <a href="#home" id="navbar__logo">Excel Data Automation Project</a>
+      <div class="navbar__toggle" id="mobile-menu">
+        <span class="bar"></span> <span class="bar"></span>
+        <span class="bar"></span>
+      </div>
+      <ul class="navbar__menu">
+        <li class="navbar__item">
+          <a href="{{ url_for('index') }}" class="navbar__links" id="home-page">Home</a>
+        </li>
+        <li class="navbar__item">
+          <a href="#about" class="navbar__links" id="about-page">About</a>
+        </li>
+        <li class="navbar__item">
+          <a href="{{ url_for('sorting') }}" class="navbar__links" id="services-page">Sorting</a>
+        </li>
+        <li class="navbar__btn">
+          <a href="{{ url_for('chat') }}" class="button" id="AI">AI</a>
+        </li>
+        <li class="navbar__btn">
+          <a href="#sign-up" class="button" id="signup">GitHub</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Excel Sorter Section -->
+  <section class="excel-container">
+    <h2>Excel File Sorter</h2>
+    <form action="/sort_numbers" method="POST" enctype="multipart/form-data">
+      <div class="excel-group">
+        <label for="fileInput">Upload an Excel File:</label>
+        <input type="file" id="fileInput" name="fileInput" class="excel-input" accept=".xlsx, .xls" required />
+      </div>
+      <div class="excel-group">
+        <label for="headerInput">Enter the Header Name:</label>
+        <input type="text" id="headerInput" name="headerInput" class="excel-input" placeholder="e.g., Price" required />
+      </div>
+      <div class="excel-group">
+        <label for="sortOrder">Select Sorting Order:</label>
+        <select id="sortOrder" name="sortOrder" class="excel-select" required>
+          <option value="asc">'A' to 'Z'</option>
+          <option value="desc">'Z' to 'A'</option>
+        </select>
+      </div>
+      <button type="submit" class="excel-button">Sort and Download</button>
+    </form>
+  </section>
+
+</body>
+</html>

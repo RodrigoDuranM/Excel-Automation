@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Excel File Styler</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='stylingStyles.css') }}" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+</head>
+<body>
+
+  <!-- Navbar Section -->
+  <nav class="navbar">
+    <div class="navbar__container">
+      <a href="#home" id="navbar__logo">Excel Data Automation Project</a>
+      <div class="navbar__toggle" id="mobile-menu">
+        <span class="bar"></span> <span class="bar"></span>
+        <span class="bar"></span>
+      </div>
+      <ul class="navbar__menu">
+        <li class="navbar__item">
+          <a href="{{ url_for('index') }}" class="navbar__links">Home</a>
+        </li>
+        
+        <li class="navbar__btn">
+          <a href="{{ url_for('chat') }}" class="button" id="AI">AI</a>
+        </li>
+        <li class="navbar__btn">
+          <a href="#sign-up" class="button" id="signup">GitHub</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Excel Styler Section -->
+  <section class="excel-container">
+    <h2>Excel File Styler</h2>
+    <form action="{{ url_for('styling') }}" method="POST" enctype="multipart/form-data">
+      <div class="excel-group">
+        <label for="fileInput">Upload an Excel File:</label>
+        <input type="file" name="fileInput" id="fileInput" class="excel-input" accept=".xlsx, .xls" required />
+      </div>
+
+      <!-- Font Color Selection -->
+      <div class="excel-group">
+        <label for="fontColor">Choose Font Color:</label>
+        <select name="fontColor" id="fontColor" class="excel-select">
+          <option value="black">Black</option>
+          <option value="white">White</option>
+          <option value="red">Red</option>
+          <option value="green">Green</option>
+          <option value="blue">Blue</option>
+        </select>
+      </div>
+
+      <!-- Header Background Selection -->
+      <div class="excel-group">
+        <label for="headerBackground">Choose Header Background Color:</label>
+        <select name="headerBackground" id="headerBackground" class="excel-select">
+          <option value="none">None</option>
+          <option value="black">Black</option>
+          <option value="white">White</option>
+          <option value="red">Red</option>
+          <option value="green">Green</option>
+          <option value="blue">Blue</option>
+        </select>
+      </div>
+
+      <!-- Bold Headers -->
+      <div class="excel-group">
+        <label for="boldHeaders">Bold Headers:</label>
+        <select name="boldHeaders" id="boldHeaders" class="excel-select">
+          <option value="yes">Yes</option>
+          <option value="no">No</option>
+        </select>
+      </div>
+
+      <!-- Borders Selection -->
+      <div class="excel-group">
+        <label for="borders">Choose Border Thickness:</label>
+        <select name="borders" id="borders" class="excel-select">
+          <option value="none">None</option>
+          <option value="thin">Thin</option>
+          <option value="medium">Medium</option>
+          <option value="thick">Thick</option>
+        </select>
+      </div>
+
+      <!-- Header Alignment -->
+      <div class="excel-group">
+        <label for="headerAlignment">Choose Header Alignment:</label>
+        <select name="headerAlignment" id="headerAlignment" class="excel-select">
+          <option value="center">Center</option>
+          <option value="left">Left</option>
+          <option value="right">Right</option>
+        </select>
+      </div>
+
+      <!-- Data Alignment -->
+      <div class="excel-group">
+        <label for="dataAlignment">Choose Data Alignment:</label>
+        <select name="dataAlignment" id="dataAlignment" class="excel-select">
+          <option value="center">Center</option>
+          <option value="left">Left</option>
+          <option value="right">Right</option>
+        </select>
+      </div>
+
+      <button type="submit" class="excel-button">Apply Styling and Download</button>
+    </form>
+  </section>
+
+</body>
+</html>

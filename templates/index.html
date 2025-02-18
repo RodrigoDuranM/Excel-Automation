@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Excel Data Automation Project</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.14.0/css/all.css"
+      integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <!-- Navbar Section -->
+    <nav class="navbar">
+      <div class="navbar__container">
+        <a href="#home" id="navbar__logo">Excel Data Automation Project</a>
+        <div class="navbar__toggle" id="mobile-menu">
+          <span class="bar"></span> <span class="bar"></span>
+          <span class="bar"></span>
+        </div>
+        <ul class="navbar__menu">
+          <li class="navbar__item">
+            <a href="#home" class="navbar__links" id="home-page">Home</a>
+          </li>
+          <li class="navbar__item">
+            <a href="#about" class="navbar__links" id="about-page">About</a>
+          </li>
+          <li class="navbar__item">
+            <a href="#services" class="navbar__links" id="services-page">Services</a>
+          </li>
+          <li class="navbar__btn">
+            <a href="{{ url_for('chat') }}" class="button" id="AI">AI</a>
+          </li>
+          <li class="navbar__btn">
+            <a href="https://GitHub.com" class="button" id="signup">GitHub</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="hero" id="home">
+      <div class="hero__container">
+        <h1 class="hero__heading">Automating <span>Excel</span></h1>
+        <p class="hero__description">Unlimited Possibilities</p>
+      </div>
+    </div>
+
+    <!-- About Section -->
+    <div class="main" id="about">
+      <div class="main__container">
+        <div class="main__content">
+          <h1>Purpose of this Project</h1>
+          <h2>Automate Excel using Python, JavaScript, HTML, CSS, and AI</h2>
+          <button class="main__btn"><a href="{{ url_for('chat') }}">Learn More</a></button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Services Section -->
+    <div class="services" id="services">
+      <h1>Available Services</h1>
+      <div class="services__wrapper">
+        <div class="services__card">
+          <h2>Data Sorting</h2>
+          <p>Sort large databases</p>
+          <div class="services__btn"><button><a href="{{ url_for('sorting') }}" id="sort">Get Started</a></button></div>
+        </div>
+        <div class="services__card">
+          <h2>Data Filtering</h2>
+          <p>Isolate important information</p>
+          <div class="services__btn"><button><a href="{{ url_for('filtering') }}" id="filter">Get Started</a></button></div>
+        </div> 
+        <div class="services__card">
+          <h2>Sheet Customization</h2>
+          <p>Style your Excel</p>
+          <div class="services__btn"><button><a href="{{ url_for('styling') }}" id="style">Get Started</a></button></div>
+        </div>
+        <div class="services__card">
+          <h2>More Services</h2>
+          <p>Find your service</p>
+          <div class="services__btn"><button><a href="{{ url_for('more') }}" id="browse">Browse</a></button></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Features Section -->
+    <div class="main" id="sign-up">
+      <div class="main__container">
+        <div class="main__content">
+          <h1>Check out other projects</h1>
+          <h2>Go to our GitHub</h2>
+          <button class="main__btn"><a href="https://GitHub.com">GitHub</a></button>
+        </div>
+        <div class="main__img--container">
+          <div class="main__img--card" id="card-2">
+            <img src="{{ url_for('static', filename='images/GitHub-Mark.png') }}" alt="Your Image">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer Section -->
+     <footer class="footer">
+      <div class="footer__container">
+        <p>�� 2025 Excel Data Automation Project. By Rodrigo Durán Morenilla.</p>
+      </div>
+    </footer>
+
+    <script src="app.js"></script>
+  </body>
+</html>
