@@ -163,5 +163,5 @@ def more():
     return render_template('more.html')
 
 if __name__ == '__main__':
-    app.run(debug=True)  # To run locally on this computer
-    #app.run(host='0.0.0.0', port=5000)  # To run on other devices in the same network
+    # app.run(debug=True)  # To run locally on this computer
+    app.run(host='0.0.0.0', port=5000)  # To run on other devices in the same network

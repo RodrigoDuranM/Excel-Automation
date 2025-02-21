@@ -2,7 +2,6 @@ import pandas as pd
 from openpyxl import Workbook
 from openpyxl.styles import Font, Alignment, Border, Side, PatternFill
 from openpyxl.utils.dataframe import dataframe_to_rows
-from win32com.client import Dispatch
 
 def order_based_on_header(df_or_sheet, header, filter_order):
     """
